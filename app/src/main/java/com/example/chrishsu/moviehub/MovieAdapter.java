@@ -60,7 +60,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         return mMovieData.length;
     }
 
-    public void setmMovieData(String[] movieData) {
+    public void setMovieData(String[] movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
     }
