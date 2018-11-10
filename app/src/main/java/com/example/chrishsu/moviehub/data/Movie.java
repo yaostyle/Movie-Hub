@@ -1,4 +1,4 @@
-package com.example.chrishsu.moviehub;
+package com.example.chrishsu.moviehub.data;
 
 public class Movie {
 

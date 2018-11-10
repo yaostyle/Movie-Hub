@@ -1,6 +1,7 @@
 package com.example.chrishsu.moviehub;
 
 import android.annotation.SuppressLint;
+import android.net.Network;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
@@ -13,6 +14,10 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.chrishsu.moviehub.utilities.NetworkUtils;
+
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity
         implements MovieAdapter.MovieAdapterOnClickHandler,
                     LoaderManager.LoaderCallbacks<String[]> {
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
     private static final int MOVIE_LOADER_ID = 0;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @SuppressLint("StaticFieldLeak")
     @NonNull
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity
                 if (mMovieData != null) {
                     deliverResult(mMovieData);
                 } else {
+                    //mLoadingIndicator.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
             }
@@ -43,7 +49,16 @@ public class MainActivity extends AppCompatActivity
             @Nullable
             @Override
             public String[] loadInBackground() {
-                return new String[0];
+                //get any preference data
+                URL movieRequestUrl = NetworkUtils.buildUrl();
+
+                try {
+                    String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
 
             @Override
