@@ -9,18 +9,22 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.LoaderManager;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.chrishsu.moviehub.data.Movie;
+import com.example.chrishsu.moviehub.utilities.JsonUtils;
 import com.example.chrishsu.moviehub.utilities.NetworkUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements MovieAdapter.MovieAdapterOnClickHandler,
-                    LoaderManager.LoaderCallbacks<String[]> {
+                    LoaderManager.LoaderCallbacks<ArrayList<Movie>> {
 
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
@@ -32,9 +36,9 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("StaticFieldLeak")
     @NonNull
     @Override
-    public Loader<String[]> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return new AsyncTaskLoader<String[]>(this) {
-            String[] mMovieData = null;
+    public Loader<ArrayList<Movie>> onCreateLoader(int i, @Nullable Bundle bundle) {
+        return new AsyncTaskLoader<ArrayList<Movie>>(this) {
+            ArrayList<Movie> mMovieData = null;
 
             @Override
             protected void onStartLoading() {
@@ -48,13 +52,14 @@ public class MainActivity extends AppCompatActivity
 
             @Nullable
             @Override
-            public String[] loadInBackground() {
+            public ArrayList<Movie> loadInBackground() {
                 //get any preference data
                 URL movieRequestUrl = NetworkUtils.buildUrl();
 
                 try {
                     String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
-                    return null;
+                    ArrayList<Movie> jsonMovieData = JsonUtils.parseJson(MainActivity.this, jsonMovieResponse);
+                    return jsonMovieData;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void deliverResult(@Nullable String[] data) {
+            public void deliverResult(@Nullable ArrayList<Movie> data) {
                 mMovieData = data;
                 super.deliverResult(data);
             }
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<String[]> loader, String[] data) {
+    public void onLoadFinished(@NonNull Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
         //mLoadingInidicator.setVisibility(View.INVISIBLE);
         if (null == data) {
             //showErrorMessage();
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<String[]> loader) {
+    public void onLoaderReset(@NonNull Loader<ArrayList<Movie>> loader) {
         //do nothing for now but it's required
     }
 
@@ -95,6 +100,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "onCreate: " + BuildConfig.ApiKey);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_movies);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT);
+        layoutManager.setSpanCount(2);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mMovieAdapter = new MovieAdapter(this);
+
+        mRecyclerView.setAdapter(mMovieAdapter);
+        LoaderManager.LoaderCallbacks<ArrayList<Movie>> callback = MainActivity.this;
+        Bundle bundleForLoader = null;
+        getSupportLoaderManager().initLoader(MOVIE_LOADER_ID, bundleForLoader, callback);
     }
 }

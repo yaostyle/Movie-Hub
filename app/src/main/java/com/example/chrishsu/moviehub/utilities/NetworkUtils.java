@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
+    //Testing URL: https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&page=1&language=en-US&api_key=a037ec13ac28fafe8250b72e517bdc3f
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String MOVIEDB_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
@@ -44,7 +45,6 @@ public class NetworkUtils {
             e.printStackTrace();
         }
 
-        Log.v(TAG, "Build URL: " + url);
         return url;
     }
 

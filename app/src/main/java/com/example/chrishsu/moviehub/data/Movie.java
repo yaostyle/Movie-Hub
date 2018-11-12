@@ -2,11 +2,11 @@ package com.example.chrishsu.moviehub.data;
 
 public class Movie {
 
-    private final String title;
-    private final String releaseDate;
-    private final String image;
-    private final String reviewAvg;
-    private final String overview;
+    private String title;
+    private String releaseDate;
+    private String image;
+    private String reviewAvg;
+    private String overview;
 
     public Movie(String title, String releaseDate, String image, String reviewAvg, String overview) {
         this.title = title;
@@ -15,7 +15,6 @@ public class Movie {
         this.reviewAvg = reviewAvg;
         this.overview = overview;
     }
-
     public String getTitle() {
         return title;
     }
@@ -35,4 +34,25 @@ public class Movie {
     public String getOverview() {
         return overview;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setReviewAvg(String reviewAvg) {
+        this.reviewAvg = reviewAvg;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
 }
