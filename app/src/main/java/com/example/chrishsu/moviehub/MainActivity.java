@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -112,5 +114,23 @@ public class MainActivity extends AppCompatActivity
         LoaderManager.LoaderCallbacks<ArrayList<Movie>> callback = MainActivity.this;
         Bundle bundleForLoader = null;
         getSupportLoaderManager().initLoader(MOVIE_LOADER_ID, bundleForLoader, callback);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_main_sort_by_popular:
+                return true;
+            case R.id.action_main_sort_by_highest_rated:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
