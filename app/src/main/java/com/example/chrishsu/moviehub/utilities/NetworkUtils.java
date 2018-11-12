@@ -13,16 +13,15 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
-    //Testing URL: https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&page=1&language=en-US&api_key=a037ec13ac28fafe8250b72e517bdc3f
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String MOVIEDB_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
 
-    final static String QUERY_PARAM = "";
-    final static String SORTBY_PARAM = "sort_by";
-    final static String PAGE_PARAM = "page";
-    final static String LANGUAGE_PARAM = "language";
-    final static String APIKEY_PARAM = "api_key";
+    final private static String QUERY_PARAM = "";
+    final private static String SORTBY_PARAM = "sort_by";
+    final private static String PAGE_PARAM = "page";
+    final private static String LANGUAGE_PARAM = "language";
+    final private static String APIKEY_PARAM = "api_key";
 
     private static final String sortBy = "popularity.desc";
     private static final String pageNo = "1";
