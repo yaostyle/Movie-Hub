@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Movie Hub</string>
+    <string name="sort_by_popular">Sort by Popular</string>
+    <string name="sort_by_highest_rated">Sort by Highest Rated</string>
 </resources>
