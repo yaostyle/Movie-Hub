@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     private MovieAdapter mMovieAdapter;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
+    private String mSortingBy = "pop";
     private static final int MOVIE_LOADER_ID = 0;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public ArrayList<Movie> loadInBackground() {
                 //get any preference data
-                URL movieRequestUrl = NetworkUtils.buildUrl();
+                URL movieRequestUrl = NetworkUtils.buildUrl(mSortingBy);
 
                 try {
                     String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
@@ -126,8 +127,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_main_sort_by_popular:
+
+                mSortingBy = "pop";
+                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
                 return true;
             case R.id.action_main_sort_by_highest_rated:
+                mSortingBy = "highRated";
+                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
                 return true;
         }
 

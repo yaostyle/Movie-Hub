@@ -3,6 +3,7 @@ package com.example.chrishsu.moviehub;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
+    private static final String TAG = "MovieAdapter";
+    
     private ArrayList<Movie> mMovieData = new ArrayList<Movie>();
     private MovieAdapterOnClickHandler mClickHandler;
     private Context mContext;
@@ -64,8 +67,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         Movie currentMovie = mMovieData.get(position);
         holder.mMovieTextView.setText(currentMovie.getTitle());
         String baseImageUrl = "https://image.tmdb.org/t/p/w500/";
-        String imageUrl = baseImageUrl + currentMovie.getImage();
-        Picasso.with(mContext).load(imageUrl).into(holder.mMovieImageView);
+
+
+        if (currentMovie.getImage() == "null") {
+            Log.d(TAG, "onBindViewHolder: currentMovieImage: " + currentMovie.getImage());
+            holder.mMovieImageView.setImageResource(R.drawable.movie_place_holder);
+        } else {
+            String imageUrl = baseImageUrl + currentMovie.getImage();
+            Picasso.with(mContext).load(imageUrl).into(holder.mMovieImageView);
+        }
+
     }
 
     @Override
