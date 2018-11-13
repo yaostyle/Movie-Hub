@@ -68,9 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         holder.mMovieTextView.setText(currentMovie.getTitle());
         String baseImageUrl = "https://image.tmdb.org/t/p/w500/";
 
-
         if (currentMovie.getImage() == "null") {
-            Log.d(TAG, "onBindViewHolder: currentMovieImage: " + currentMovie.getImage());
             holder.mMovieImageView.setImageResource(R.drawable.movie_place_holder);
         } else {
             String imageUrl = baseImageUrl + currentMovie.getImage();
