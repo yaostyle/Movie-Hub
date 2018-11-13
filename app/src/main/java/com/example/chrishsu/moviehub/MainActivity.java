@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -45,10 +46,11 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             protected void onStartLoading() {
+
                 if (mMovieData != null) {
                     deliverResult(mMovieData);
                 } else {
-                    //mLoadingIndicator.setVisibility(View.VISIBLE);
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
             }
@@ -79,11 +81,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
-        //mLoadingInidicator.setVisibility(View.INVISIBLE);
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
         if (null == data) {
             //showErrorMessage();
         } else {
-            //showMovieDataView();
+            showMovieDataView();
             mMovieAdapter.setMovieData(data);
         }
     }
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_movies);
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT);
         layoutManager.setSpanCount(2);
@@ -125,18 +128,30 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        invalidateData();
+
         switch (item.getItemId()) {
             case R.id.action_main_sort_by_popular:
-
                 mSortingBy = "pop";
-                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
+                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID
+                        , null, this);
                 return true;
             case R.id.action_main_sort_by_highest_rated:
                 mSortingBy = "highRated";
-                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null, this);
+                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID
+                        , null, this);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void invalidateData() {
+        mMovieAdapter.setMovieData(null);
+    }
+
+    private void showMovieDataView() {
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 }
