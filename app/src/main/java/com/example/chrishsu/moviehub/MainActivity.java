@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity
         LoaderManager.LoaderCallbacks<ArrayList<Movie>> callback = MainActivity.this;
         Bundle bundleForLoader = null;
         getSupportLoaderManager().initLoader(MOVIE_LOADER_ID, bundleForLoader, callback);
+
     }
 
     @Override

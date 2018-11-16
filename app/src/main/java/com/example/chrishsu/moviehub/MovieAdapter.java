@@ -45,8 +45,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
 
-            String currentMovie = mMovieData.get(adapterPosition).toString();
+            String currentMovie = mMovieData.get(adapterPosition).getTitle();
             mClickHandler.onClick(currentMovie);
+            Log.d(TAG, "onClick: mClickHandler: " + currentMovie.toString());
+
         }
     }
 
@@ -74,6 +76,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             String imageUrl = baseImageUrl + currentMovie.getImage();
             Picasso.with(mContext).load(imageUrl).into(holder.mMovieImageView);
         }
+
+
 
     }
 
