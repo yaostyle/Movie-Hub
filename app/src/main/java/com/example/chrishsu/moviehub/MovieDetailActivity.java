@@ -31,7 +31,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             mImage = intent.getStringExtra(EXTRA_IMAGE);
             mReviewAvg = intent.getStringExtra(EXTRA_REVIEW_AVG);
             mOverview = intent.getStringExtra(EXTRA_OVERVIEW);
-
             setTitle(mTitle);
         }
 
