@@ -22,11 +22,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private ArrayList<Movie> mMovieData = new ArrayList<Movie>();
     private MovieAdapterOnClickHandler mClickHandler;
     private Context mContext;
-    private final String EXTRA_TITLE = "EXTRA_TITLE";
-    private final String EXTRA_RELEASE_DATE = "EXTRA_RELEASE_DATE";
-    private final String EXTRA_IMAGE = "EXTRA_IMAGE";
-    private final String EXTRA_REVIEW_AVG = "EXTRA_REVIEW_AVG";
-    private final String EXTRA_OVERVIEW = "EXTRA_OVERVIEW";
 
     public interface MovieAdapterOnClickHandler {
         void onClick(String currentMovie);
@@ -60,11 +55,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
         public void launchDetailActivity(View v, ArrayList<Movie> movieData, int index) {
             Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
-            intent.putExtra(EXTRA_TITLE, movieData.get(index).getTitle());
-            intent.putExtra(EXTRA_RELEASE_DATE, movieData.get(index).getReleaseDate());
-            intent.putExtra(EXTRA_IMAGE, movieData.get(index).getImage());
-            intent.putExtra(EXTRA_REVIEW_AVG, movieData.get(index).getReviewAvg());
-            intent.putExtra(EXTRA_OVERVIEW, movieData.get(index).getOverview());
+            intent.putExtra(Movie.EXTRA_TITLE, movieData.get(index).getTitle());
+            intent.putExtra(Movie.EXTRA_RELEASE_DATE, movieData.get(index).getReleaseDate());
+            intent.putExtra(Movie.EXTRA_IMAGE, movieData.get(index).getImage());
+            intent.putExtra(Movie.EXTRA_REVIEW_AVG, movieData.get(index).getReviewAvg());
+            intent.putExtra(Movie.EXTRA_OVERVIEW, movieData.get(index).getOverview());
             v.getContext().startActivity(intent);
 
         }

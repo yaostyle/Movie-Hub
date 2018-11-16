@@ -8,6 +8,12 @@ public class Movie {
     private String reviewAvg;
     private String overview;
 
+    public static final String EXTRA_TITLE = "EXTRA_TITLE";
+    public static final String EXTRA_RELEASE_DATE = "EXTRA_RELEASE_DATE";
+    public static final String EXTRA_IMAGE = "EXTRA_IMAGE";
+    public static final String EXTRA_REVIEW_AVG = "EXTRA_REVIEW_AVG";
+    public static final String EXTRA_OVERVIEW = "EXTRA_OVERVIEW";
+
     public Movie(String title, String releaseDate, String image, String reviewAvg, String overview) {
         this.title = title;
         this.releaseDate = releaseDate;
