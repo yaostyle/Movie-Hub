@@ -1,6 +1,7 @@
 package com.example.chrishsu.moviehub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private ArrayList<Movie> mMovieData = new ArrayList<Movie>();
     private MovieAdapterOnClickHandler mClickHandler;
     private Context mContext;
+    private final String EXTRA_TITLE = "EXTRA_TITLE";
+    private final String EXTRA_RELEASE_DATE = "EXTRA_RELEASE_DATE";
+    private final String EXTRA_IMAGE = "EXTRA_IMAGE";
+    private final String EXTRA_REVIEW_AVG = "EXTRA_REVIEW_AVG";
+    private final String EXTRA_OVERVIEW = "EXTRA_OVERVIEW";
 
     public interface MovieAdapterOnClickHandler {
         void onClick(String currentMovie);
@@ -42,12 +48,27 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(View clickView) {
             int adapterPosition = getAdapterPosition();
 
-            String currentMovie = mMovieData.get(adapterPosition).toString();
+            String currentMovie = mMovieData.get(adapterPosition).getTitle();
             mClickHandler.onClick(currentMovie);
+
+            launchDetailActivity(clickView, mMovieData, adapterPosition);
+
         }
+
+        public void launchDetailActivity(View v, ArrayList<Movie> movieData, int index) {
+            Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
+            intent.putExtra(EXTRA_TITLE, movieData.get(index).getTitle());
+            intent.putExtra(EXTRA_RELEASE_DATE, movieData.get(index).getReleaseDate());
+            intent.putExtra(EXTRA_IMAGE, movieData.get(index).getImage());
+            intent.putExtra(EXTRA_REVIEW_AVG, movieData.get(index).getReviewAvg());
+            intent.putExtra(EXTRA_OVERVIEW, movieData.get(index).getOverview());
+            v.getContext().startActivity(intent);
+
+        }
+
     }
 
     @NonNull
@@ -74,6 +95,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             String imageUrl = baseImageUrl + currentMovie.getImage();
             Picasso.with(mContext).load(imageUrl).into(holder.mMovieImageView);
         }
+
+
 
     }
 
